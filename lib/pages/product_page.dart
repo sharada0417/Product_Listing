@@ -1,5 +1,7 @@
 import 'package:app_routing/data/product_data.dart';
 import 'package:app_routing/models/product_model.dart';
+import 'package:app_routing/pages/cart_page.dart';
+import 'package:app_routing/pages/favourite_page.dart';
 import 'package:flutter/material.dart';
 
 class ProductPage extends StatelessWidget {
@@ -23,14 +25,26 @@ class ProductPage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           FloatingActionButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => FavouritePage()),
+              );
+            },
             backgroundColor: Colors.deepOrange,
+            heroTag: "favourite_btn",
             child: Icon(Icons.favorite, color: Colors.white),
           ),
           SizedBox(width: 10),
           FloatingActionButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => CartPage()),
+              );
+            },
             backgroundColor: Colors.deepOrange,
+            heroTag: "shopping_btn",
             child: Icon(Icons.shopping_cart, color: Colors.white),
           ),
         ],
