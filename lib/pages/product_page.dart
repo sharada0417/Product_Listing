@@ -56,7 +56,7 @@ class ProductPage extends StatelessWidget {
         itemBuilder: (context, index) {
           final Product product = products[index];
           return Card(
-            child: Consumer(
+            child: Consumer<CartProvider>(
               builder:
                   (
                     BuildContext context,
@@ -71,8 +71,13 @@ class ProductPage extends StatelessWidget {
                             style: TextStyle(fontWeight: FontWeight.bold),
                           ),
                           SizedBox(width: 50),
-                          //todo: fill this
-                          Text("0"),
+                          Text(
+                            cartProvider.items.containsKey(product.id)
+                                ? cartProvider.items[product.id]!.quantity
+                                      .toString()
+                                : "0",
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
                         ],
                       ),
                       subtitle: Text("\$${product.price.toString()}"),
@@ -90,8 +95,19 @@ class ProductPage extends StatelessWidget {
                                 product.price,
                                 product.title,
                               );
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text("Added to cart"),
+                                  duration: Duration(seconds: 1),
+                                ),
+                              );
                             },
-                            icon: Icon(Icons.shopping_cart),
+                            icon: Icon(
+                              Icons.shopping_cart,
+                              color: cartProvider.items.containsKey(product.id)
+                                  ? Colors.deepOrange
+                                  : Colors.grey,
+                            ),
                           ),
                         ],
                       ),
