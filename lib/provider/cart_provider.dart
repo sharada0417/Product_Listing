@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class CartProvider extends ChangeNotifier {
   //cart items state
-  final Map<String, CartItem> _items = {};
+  Map<String, CartItem> _items = {};
 
   //getter
   Map<String, CartItem> get items {
@@ -58,5 +58,20 @@ class CartProvider extends ChangeNotifier {
       _items.remove(productId);
     }
     notifyListeners();
+  }
+
+  //clear
+  void clearAll() {
+    _items = {};
+    notifyListeners();
+  }
+
+  //calculate total
+  double get totalAmount {
+    var total = 0.0;
+    _items.forEach((key, CartItem) {
+      total += CartItem.price * CartItem.quantity;
+    });
+    return total;
   }
 }
